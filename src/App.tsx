@@ -6,12 +6,14 @@ import {
   ThemeProvider,
   useMediaQuery,
 } from '@mui/material';
-import React, { FC } from 'react';
+import { FC, useMemo } from 'react';
+
+import { TaskList } from './components/TaskList';
 
 const App: FC = () => {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
-  const theme = React.useMemo(
+  const theme = useMemo(
     () =>
       createTheme({
         palette: {
@@ -27,7 +29,7 @@ const App: FC = () => {
       <Container disableGutters>
         <Grid container spacing={2}>
           <Grid item xs={4}>
-            TODO: Task list
+            <TaskList />
           </Grid>
           <Grid item xs={8}>
             TODO: Gantt chart
