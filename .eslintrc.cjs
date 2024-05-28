@@ -1,18 +1,92 @@
 module.exports = {
-  root: true,
-  env: { browser: true, es2020: true },
-  extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:react-hooks/recommended',
-  ],
-  ignorePatterns: ['dist', '.eslintrc.cjs'],
-  parser: '@typescript-eslint/parser',
-  plugins: ['react-refresh'],
-  rules: {
-    'react-refresh/only-export-components': [
-      'warn',
-      { allowConstantExport: true },
+    root: true,
+    env: {browser: true, es2020: true},
+    extends: [
+        'eslint:recommended',
+        'plugin:@typescript-eslint/recommended',
+        'plugin:react-hooks/recommended',
+        'plugin:react/recommended',
+        'plugin:jsdoc/recommended-typescript-flavor-error',
+        'plugin:typescript-sort-keys/recommended',
     ],
-  },
+    ignorePatterns: ['dist', '.eslintrc.cjs'],
+    parser: '@typescript-eslint/parser',
+    plugins: [
+        'react-refresh',
+        'simple-import-sort',
+        'jsdoc',
+        'prettier',
+        'unused-imports',
+        'typescript-sort-keys',
+
+    ],
+    settings: {
+        react: {
+            pragma: 'React',
+            version: 'detect',
+        },
+        jsdoc: {
+            mode: 'typescript',
+            contexts: [
+                'ArrowFunctionExpression',
+                'ClassDeclaration',
+                'ClassExpression',
+                'ClassProperty',
+                'FunctionDeclaration',
+                'FunctionExpression',
+                'MethodDefinition',
+                'TSDeclareFunction',
+                'TSEnumDeclaration',
+                'TSInterfaceDeclaration',
+                'TSMethodSignature',
+                'TSModuleDeclaration',
+                'TSTypeAliasDeclaration',
+                'VariableDeclaration',
+            ],
+        },
+    },
+    rules: {
+        'prettier/prettier': [
+            'error',
+            {
+                endOfLine: 'auto',
+            },
+        ],
+        'simple-import-sort/imports': 'error',
+        'simple-import-sort/exports': 'error',
+        '@typescript-eslint/no-unused-vars': 'off',
+        'unused-imports/no-unused-imports': 'error',
+        'unused-imports/no-unused-vars': [
+            'warn',
+            {
+                vars: 'all',
+                varsIgnorePattern: '^_',
+                args: 'after-used',
+                argsIgnorePattern: '^_',
+            },
+        ],
+        'no-case-declarations': 'warn',
+        '@typescript-eslint/ban-ts-comment': 'warn',
+        'jsdoc/require-returns': 'off',
+        'jsdoc/tag-lines': 0,
+        'jsdoc/require-property-type': 'off',
+        'jsdoc/require-param-type': 'off',
+        'jsdoc/require-jsdoc': 'off',
+        'jsdoc/require-returns-type': 'off',
+        'jsdoc/require-param': [
+            'error',
+            {
+                contexts: [
+                    // Это чтобы React компоненты не обрастали пропсами при --fix
+                    'FunctionDeclaration:not([id.name=/^[A-Z].+/])',
+                    'VariableDeclarator:not([id.name=/^[A-Z].+/]) > ArrowFunctionExpression',
+                ],
+            },
+        ],
+        'react-refresh/only-export-components': [
+            'warn',
+            {allowConstantExport: true},
+        ],
+    },
+
 }
