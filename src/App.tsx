@@ -8,6 +8,7 @@ import {
 } from '@mui/material';
 import { FC, useMemo } from 'react';
 
+import { GanttChart } from './components/GanttChart';
 import { TaskList } from './components/TaskList';
 
 const App: FC = () => {
@@ -28,11 +29,11 @@ const App: FC = () => {
       <CssBaseline />
       <Container disableGutters>
         <Grid container spacing={2}>
-          <Grid item xs={4}>
+          <Grid item xs={3}>
             <TaskList />
           </Grid>
-          <Grid item xs={8}>
-            TODO: Gantt chart
+          <Grid item xs={9}>
+            <GanttChart />
           </Grid>
         </Grid>
       </Container>

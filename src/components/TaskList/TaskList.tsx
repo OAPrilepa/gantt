@@ -7,6 +7,7 @@ import { tasksMock } from '../../__mocks__/tasks.ts';
 export const TaskList: FC = () => {
   return (
     <List>
+      <ListItem>&nbsp;</ListItem>
       {tasksMock.map((task) => (
         <ListItem key={task.id}>
           <ListItemIcon>
