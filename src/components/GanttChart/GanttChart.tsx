@@ -10,21 +10,23 @@ interface TaskWithLeft extends Task {
   left: number;
 }
 
-function calcLeft(currentTask: Task): number {
+function calcLeft(prevTasks: TaskWithLeft[], currentTask: Task): number {
   if (currentTask.dependsOn) {
-    const parent = tasksMock.find((task) => task.id === currentTask.dependsOn);
+    const parent = prevTasks.find((task) => task.id === currentTask.dependsOn);
     if (parent) {
-      // todo: use parent.left to calc optimization
-      return (parent.duration || 0) + calcLeft(parent);
+      return (parent.duration || 0) + parent.left;
     }
   }
   return 0;
 }
 
-const tasks: TaskWithLeft[] = tasksMock.map((task) => ({
-  ...task,
-  left: calcLeft(task),
-}));
+const tasks: TaskWithLeft[] = tasksMock.reduce((tasksWithLeft, task) => {
+  tasksWithLeft.push({
+    ...task,
+    left: calcLeft(tasksWithLeft, task),
+  });
+  return tasksWithLeft;
+}, [] as TaskWithLeft[]);
 
 export const GanttChart: FC = () => (
   <List>
@@ -32,7 +34,7 @@ export const GanttChart: FC = () => (
     {tasks.map((task) => (
       <ListItem key={task.id}>
         <Chip
-          color='success'
+          color='info'
           sx={{
             width: defaultWidth * (task.duration || 1),
           }}
