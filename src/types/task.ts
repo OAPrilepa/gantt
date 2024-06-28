@@ -9,7 +9,7 @@ import { UUID } from './uuid.ts';
  * @property name        Название.
  */
 export interface Task {
-  dependsOn?: UUID;
+  dependsOn?: UUID; // @todo Надо уметь зависеть от нескольких задач
   duration?: number;
   id: UUID;
   name: string;
